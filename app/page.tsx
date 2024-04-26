@@ -3,6 +3,10 @@ import PrintableMap from "@/components/PrintableMap";
 import { useEffect, useState } from "react";
 
 export default function Home() {
+  if (typeof window !== "undefined") {
+    window.alert("window.alert from client component");
+  }
+
   const [hideButton, setHideButton] = useState<boolean>(false);
   const [fullscreen, setFullscreen] = useState<boolean>(false);
 
@@ -14,7 +18,9 @@ export default function Home() {
       window.print();
       setHideButton(false);
       setFullscreen((prevFullscreen) => !prevFullscreen);
-      window.location.reload();
+      if (typeof window !== "undefined") {
+        window.location.reload();
+      }
     }, 300);
   };
 
