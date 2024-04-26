@@ -19,7 +19,7 @@ type prop = {
   fullscreen: boolean;
 };
 
-export function Map({ fullscreen }: prop) {
+function Map({ fullscreen }: prop) {
   const [selectedMarkerPosition, setSelectedMarkerPosition] = useState<
     [number, number] | null
   >(null);
