@@ -1,15 +1,30 @@
 "use client";
 import PrintableMap from "@/components/PrintableMap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Map() {
   const [hideButton, setHideButton] = useState<boolean>(false);
   const [fullscreen, setFullscreen] = useState<boolean>(false);
 
+  const handlePrint = () => {
+    setHideButton(true);
+    setFullscreen((prevFullscreen) => !prevFullscreen);
+    console.log(fullscreen);
+    setTimeout(() => {
+      window.print();
+      setHideButton(false);
+      setFullscreen((prevFullscreen) => !prevFullscreen);
+      window.location.reload();
+    }, 300);
+  };
+
   return (
     <div className="w-full h-screen flex justify-center items-center">
-      <PrintableMap />
-      <div className={hideButton ? "hidden" : ""}></div>
+      <PrintableMap fullscreen={fullscreen} />
+      <div className={hideButton ? "hidden" : ""}>
+        <button onClick={handlePrint}>TESTE</button>
+      </div>
     </div>
   );
 }
