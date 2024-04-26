@@ -19,11 +19,13 @@ type prop = {
   fullscreen: boolean;
 };
 
-export function Map({ fullscreen }: prop) {
+export function Map() {
   const [selectedMarkerPosition, setSelectedMarkerPosition] = useState<
     [number, number] | null
   >(null);
   const [mapKey, setMapKey] = useState<string>("mapKey");
+  const [hideButton, setHideButton] = useState<boolean>(false);
+  const [fullscreen, setFullscreen] = useState<boolean>(false);
 
   useEffect(() => {
     if (fullscreen) {
@@ -40,6 +42,25 @@ export function Map({ fullscreen }: prop) {
   const handleClick = (position: [number, number]) => {
     setSelectedMarkerPosition(position);
     RecenterAutomatically;
+  };
+
+  useEffect(() => {
+    if (fullscreen) {
+      setTimeout(() => {
+        window.print();
+        window.location.reload();
+      }, 300);
+    }
+  }, [fullscreen]);
+
+  const handlePrint = () => {
+    setHideButton(true);
+    setFullscreen((prevFullscreen) => !prevFullscreen);
+    console.log(fullscreen);
+    setTimeout(() => {
+      setHideButton(false);
+      setFullscreen((prevFullscreen) => !prevFullscreen);
+    }, 300);
   };
 
   return (
@@ -82,6 +103,7 @@ export function Map({ fullscreen }: prop) {
           />
         )}
       </MapContainer>
+      <button onClick={handlePrint}>Teste</button>
     </div>
   );
 }
